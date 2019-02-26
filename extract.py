@@ -1,6 +1,7 @@
 import pikepdf
 import pdfx
 import re
+import os
 
 pdf = pikepdf.open('atul.pdf')
 pdf.save('output.pdf')
@@ -20,3 +21,4 @@ for i in range(len(m3)):
         courses.append('{}{}'.format(course_names[j], course_codes[j]))
     print(courses)
 
+os.remove('output.pdf')
