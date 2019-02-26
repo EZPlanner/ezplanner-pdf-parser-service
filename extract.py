@@ -1,24 +1,32 @@
-import pikepdf
+from pikepdf import Pdf
 import pdfx
 import re
 import os
 
-pdf = pikepdf.open('atul.pdf')
-pdf.save('output.pdf')
+def extract_courses_from_transcript(userId, pdf_file):
+    file_name = '{}.pdf'.format(userId)
 
-pdf2 = pdfx.PDFx('output.pdf')
-text = pdf2.get_text()
+    pdf_file.save(file_name)
 
-m3 = re.findall('(?<=Course)([\S\s]*?)(?=Description|Term GPA)', text)
+    pdf = Pdf.open(file_name)
+    pdf.save(file_name)
 
-for i in range(len(m3)):
-    print('******* TERM:')
-    data = m3[i].split()
-    course_names = data[:len(data)//2]
-    course_codes = data[len(data)//2:]
-    courses = []
-    for j in range(len(data)//2):
-        courses.append('{}{}'.format(course_names[j], course_codes[j]))
-    print(courses)
+    pdf2 = pdfx.PDFx(file_name)
+    text = pdf2.get_text()
 
-os.remove('output.pdf')
+    course_matches = re.findall('(?<=Course)([\S\s]*?)(?=Description|Term GPA)', text)
+
+    all_courses = []
+
+    for i in range(len(course_matches)):
+        data = course_matches[i].split()
+        course_names = data[:len(data)//2]
+        course_codes = data[len(data)//2:]
+        courses = []
+        for j in range(len(data)//2):
+            courses.append('{}{}'.format(course_names[j], course_codes[j]))
+        all_courses.extend(courses)
+    
+    os.remove(file_name)
+
+    return all_courses
