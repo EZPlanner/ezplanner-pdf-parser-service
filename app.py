@@ -3,7 +3,6 @@ from flask_cors import CORS
 from waitress import serve
 from extract import extract_courses_from_transcript
 
-
 app = Flask(__name__)
 CORS(app)
 
