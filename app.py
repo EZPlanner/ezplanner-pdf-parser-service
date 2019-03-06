@@ -12,7 +12,10 @@ def transcript_courses(userId):
 
     courses = extract_courses_from_transcript(userId, pdf_file)
 
-    return jsonify(courses), 200
+    return jsonify({
+        'status': 'success',
+        'data': courses
+    }), 200
 
 if __name__ == '__main__':
     serve(app, port=8080)
