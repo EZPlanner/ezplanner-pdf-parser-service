@@ -4,7 +4,7 @@ defusedxml==0.5.0
 Flask==1.0.2
 Flask-Cors==3.0.7
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 lxml==4.3.1
 MarkupSafe==1.1.1
 pdfminer2==20151206
